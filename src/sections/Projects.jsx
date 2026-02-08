@@ -43,6 +43,7 @@ const projects = [
     thumbnail: `${BASE_PATH}thumbnails/weather-thumb.png`,
     image: 'bg-gradient-to-br from-emerald-500/20 to-teal-500/20',
     link: 'https://github.com/huxi786/weather-app',
+    demo: 'https://huxi786.github.io/weather-app/',
     slides: [
       `${BASE_PATH}weather/weather1.png`
     ]
@@ -62,6 +63,7 @@ const projects = [
     thumbnail: `${BASE_PATH}thumbnails/calc-thumb.png`,
     image: 'bg-gradient-to-br from-orange-500/20 to-red-500/20',
     link: 'https://github.com/huxi786/Calculator',
+    demo: 'https://huxi786.github.io/Calculator/',
     slides: [
       `${BASE_PATH}calculator/calc1.png`
     ]
@@ -159,7 +161,11 @@ function ProjectCard({ project, index, onOpen }) {
           <button 
             onClick={(e) => {
               playClick();
-              onOpen();
+              if (project.demo) {
+                window.open(project.demo, '_blank');
+              } else {
+                onOpen();
+              }
             }}
             className="flex items-center gap-2 text-sm font-medium text-white hover:text-purple-400 transition-colors"
           >
