@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Layout, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useSoundEffects } from '../hooks/useSoundEffects';
 
 const BASE_PATH = '/Portfolio./';
 
@@ -108,12 +109,15 @@ export default function Projects() {
 }
 
 function ProjectCard({ project, index, onOpen }) {
+  const { playClick, playHover } = useSoundEffects();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.2 }}
+      onMouseEnter={playHover}
       className="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/20 transition-all"
     >
       <div className={`h-48 w-full group-hover:scale-105 transition-transform duration-500 flex items-center justify-center bg-white overflow-hidden`}>
@@ -147,12 +151,16 @@ function ProjectCard({ project, index, onOpen }) {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={playClick}
             className="flex items-center gap-2 text-sm font-medium text-white hover:text-blue-400 transition-colors"
           >
             <Github size={16} /> Code
           </a>
           <button 
-            onClick={onOpen}
+            onClick={(e) => {
+              playClick();
+              onOpen();
+            }}
             className="flex items-center gap-2 text-sm font-medium text-white hover:text-purple-400 transition-colors"
           >
             <ExternalLink size={16} /> Demo

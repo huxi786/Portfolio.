@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Code, Database, Server } from 'lucide-react';
+import { useSoundEffects } from '../hooks/useSoundEffects';
 
 export default function Hero() {
+  const { playClick, playHover } = useSoundEffects();
+
   return (
     <section id="home" className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-950 pt-16">
       {/* Background Anime Elements */}
@@ -46,6 +49,8 @@ export default function Hero() {
                 href="#projects"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onMouseEnter={playHover}
+                onClick={playClick}
                 className="group relative px-8 py-4 bg-white text-slate-950 font-bold rounded-full overflow-hidden flex items-center gap-2 w-full sm:w-auto justify-center"
               >
                 <span className="relative z-10">View Work</span>
@@ -57,6 +62,8 @@ export default function Hero() {
                 href="#contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onMouseEnter={playHover}
+                onClick={playClick}
                 className="px-8 py-4 bg-white/5 text-white font-medium rounded-full border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-sm w-full sm:w-auto justify-center flex"
               >
                 Contact Me

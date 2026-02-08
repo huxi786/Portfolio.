@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, Code2, Terminal } from 'lucide-react';
+import { useSoundEffects } from '../hooks/useSoundEffects';
 
 const navItems = [
   { name: 'Home', href: '#home' },
@@ -13,6 +14,7 @@ const navItems = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { playClick, playHover } = useSoundEffects();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,6 +51,8 @@ export default function Navbar() {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
+                  onMouseEnter={playHover}
+                  onClick={playClick}
                   className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-white/10"
                 >
                   {item.name}
