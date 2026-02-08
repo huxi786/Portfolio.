@@ -2,53 +2,55 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Layout, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
+const BASE_PATH = '/Portfolio./';
+
 const projects = [
   {
     title: 'Mystic Mall E-Commerce',
     desc: 'A fully responsive e-commerce platform built with PHP, HTML, CSS, and JavaScript. Features include user authentication, payment integration, admin dashboard, and real-time inventory management.',
     tags: ['PHP', 'HTML', 'CSS', 'JavaScript', 'Tailwind'],
-    thumbnail: '/thumbnails/mystic-thumb.png',
+    thumbnail: `${BASE_PATH}thumbnails/mystic-thumb.png`,
     image: 'bg-gradient-to-br from-blue-500/20 to-purple-500/20',
     link: 'https://github.com/huxi786/My-first-project-Mystic-mall',
     slides: [
-      '/mystic/mm1.png',
-      '/mystic/mm2.png',
-      '/mystic/mm3.png',
-      '/mystic/mm4.png',
-      '/mystic/mm5.png'
+      `${BASE_PATH}mystic/mm1.png`,
+      `${BASE_PATH}mystic/mm2.png`,
+      `${BASE_PATH}mystic/mm3.png`,
+      `${BASE_PATH}mystic/mm4.png`,
+      `${BASE_PATH}mystic/mm5.png`
     ]
   },
   {
     title: 'Library Management System',
     desc: 'A complete Library CRUD system offering Admin and User panels. Features book management, borrowing tracking, and system notifications.',
     tags: ['Laravel', 'Blade', 'PHP', 'MySQL'],
-    thumbnail: '/thumbnails/library-thumb.png',
+    thumbnail: `${BASE_PATH}thumbnails/library-thumb.png`,
     image: 'bg-gradient-to-br from-indigo-500/20 to-pink-500/20',
     link: 'https://github.com/huxi786/Libraby-System-',
     slides: [
-      '/library/lib1.png',
-      '/library/lib2.png',
-      '/library/lib3.png',
-      '/library/lib4.png',
-      '/library/lib5.png'
+      `${BASE_PATH}library/lib1.png`,
+      `${BASE_PATH}library/lib2.png`,
+      `${BASE_PATH}library/lib3.png`,
+      `${BASE_PATH}library/lib4.png`,
+      `${BASE_PATH}library/lib5.png`
     ]
   },
   {
     title: 'Interactive Weather App',
     desc: 'Real-time weather dashboard fetching live data via API. Features location search, humidity/wind details, and error handling for invalid inputs.',
     tags: ['HTML', 'JavaScript', 'CSS', 'OpenWeatherAPI'],
-    thumbnail: '/thumbnails/weather-thumb.png',
+    thumbnail: `${BASE_PATH}thumbnails/weather-thumb.png`,
     image: 'bg-gradient-to-br from-emerald-500/20 to-teal-500/20',
     link: 'https://github.com/huxi786/weather-app',
     slides: [
-      '/weather/weather1.png'
+      `${BASE_PATH}weather/weather1.png`
     ]
   },
   {
     title: 'GMass Bulk Emailer',
     desc: 'A powerful bulk email dispatch tool built with Laravel. Features efficient email queuing, contact management, and automated mass mailing capabilities.',
     tags: ['Laravel', 'PHP', 'Blade', 'MySQL','API Integration','Email Dispatching'],
-    thumbnail: '/thumbnails/gmass-thumb.png',
+    thumbnail: `${BASE_PATH}thumbnails/gmass-thumb.png`,
     image: 'bg-gradient-to-br from-red-500/20 to-blue-500/20',
     link: 'https://github.com/huxi786/gmass-app'
   },
@@ -56,11 +58,11 @@ const projects = [
     title: 'Smart Calculator',
     desc: 'A pure JavaScript calculator featuring a modern UI. Capable of handling standard arithmetic operations with error handling and keyboard support.',
     tags: ['HTML', 'CSS', 'JavaScript'],
-    thumbnail: '/thumbnails/calc-thumb.png',
+    thumbnail: `${BASE_PATH}thumbnails/calc-thumb.png`,
     image: 'bg-gradient-to-br from-orange-500/20 to-red-500/20',
     link: 'https://github.com/huxi786/Calculator',
     slides: [
-      '/calculator/calc1.png'
+      `${BASE_PATH}calculator/calc1.png`
     ]
   },
 ];
