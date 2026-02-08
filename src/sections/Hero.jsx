@@ -75,7 +75,7 @@ export default function Hero() {
               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-600 rounded-full blur-2xl opacity-50 animate-pulse" />
               <div className="relative w-full h-full rounded-full border-4 border-white/10 bg-slate-900/50 backdrop-blur-xl overflow-hidden flex items-center justify-center">
                 <img 
-                  src="/huzaifa.jpg" 
+                  src="/Portfolio./huzaifa.png" 
                   alt="Huzaifa Ajmal" 
                   className="w-full h-full object-cover"
                 />
