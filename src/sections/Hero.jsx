@@ -39,7 +39,7 @@ export default function Hero() {
             </h1>
 
             <p className="mt-4 text-lg sm:text-xl text-gray-400 mb-8 sm:mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Full Stack Developer specializing in <span className="text-white font-semibold">Laravel</span> & <span className="text-white font-semibold">React</span>.
+              Full Stack Developer specializing in <span className="text-white font-semibold">PHP</span> & <span className="text-white font-semibold">Laravel</span>.
               <br />
               Building scalable, efficient, and interactive web solutions.
             </p>
