@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Code2, Terminal } from 'lucide-react';
+import { Menu, X, Code2, Terminal, Download } from 'lucide-react';
 import { useSoundEffects } from '../hooks/useSoundEffects';
 
 const navItems = [
@@ -43,7 +43,7 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:block">
-            <div className="flex items-baseline space-x-8">
+            <div className="flex items-center space-x-8">
               {navItems.map((item, index) => (
                 <motion.a
                   key={item.name}
@@ -58,11 +58,30 @@ export default function Navbar() {
                   {item.name}
                 </motion.a>
               ))}
+              <motion.a
+                href="/Portfolio./resume.pdf"
+                download="Huzaifa_Ajmal_Resume.pdf"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors border border-white/10 flex items-center gap-2"
+              >
+                <span>Resume</span>
+                <Download size={14} />
+              </motion.a>
             </div>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-4">
+             <a
+                href="/Portfolio./resume.pdf"
+                download="Huzaifa_Ajmal_Resume.pdf"
+                className="px-3 py-1.5 rounded-full bg-white/10 text-white text-xs font-medium border border-white/10 flex items-center gap-1"
+              >
+                <span>Resume</span>
+                <Download size={12} />
+              </a>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-300 hover:text-white p-2"

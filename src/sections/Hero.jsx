@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Code, Database, Server } from 'lucide-react';
+import { ArrowRight, Code, Database, Server, Download } from 'lucide-react';
 import { useSoundEffects } from '../hooks/useSoundEffects';
 
 export default function Hero() {
@@ -68,6 +68,17 @@ export default function Hero() {
               >
                 Contact Me
               </motion.a>
+
+              <motion.a
+                 href="/Portfolio./resume.pdf"
+                 download="Huzaifa_Ajmal_Resume.pdf"
+                 whileHover={{ scale: 1.05 }}
+                 whileTap={{ scale: 0.95 }}
+                 className="p-4 bg-white/5 text-white rounded-full border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-sm flex items-center justify-center"
+                 title="Download Resume"
+               >
+                 <Download size={20} />
+               </motion.a>
             </div>
           </motion.div>
 
@@ -128,7 +139,7 @@ export default function Hero() {
   );
 }
 
-function FloatingIcon({ icon: Icon, className, delay }) {
+function FloatingIcon({ icon: Icon, className, delay }) { 
   return (
     <motion.div
       animate={{ 
