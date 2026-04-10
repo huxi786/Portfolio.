@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
 import Hero from './sections/Hero';
 import About from './sections/About';
@@ -11,7 +12,8 @@ import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
-    <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 overflow-x-hidden w-full">
+    <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 overflow-x-hidden w-full" style={{ cursor: 'none' }}>
+      <CustomCursor />
       <Navbar />
       
       <main className="relative z-10">
