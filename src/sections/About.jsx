@@ -64,7 +64,7 @@ export default function About() {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-600 rounded-3xl blur-2xl opacity-40 scale-110" />
               <div className="relative w-56 h-56 sm:w-64 sm:h-64 rounded-3xl overflow-hidden border-2 border-white/10 shadow-2xl">
-                <img src="/Portfolio./huzaifa.jpg" alt="Huzaifa Ajmal" className="w-full h-full object-cover" />
+                <img src="/huzaifa.jpg" alt="Huzaifa Ajmal" className="w-full h-full object-cover" />
               </div>
             </div>
 

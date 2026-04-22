@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Layout, X, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { useSoundEffects } from '../hooks/useSoundEffects';
 
-const BASE = '/Portfolio./';
+const BASE = '/';
 
 const projects = [
   {
