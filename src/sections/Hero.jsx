@@ -174,7 +174,7 @@ export default function Hero() {
             <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto">
               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-600 rounded-full blur-2xl opacity-50 animate-pulse" />
               <div className="relative w-full h-full rounded-full border-4 border-white/10 bg-slate-900/50 backdrop-blur-xl overflow-hidden flex items-center justify-center">
-                <img src="/Portfolio./huzaifa.jpg" alt="Huzaifa Ajmal" className="w-full h-full object-cover" />
+                <img src="/huzaifa.jpg" alt="Huzaifa Ajmal" className="w-full h-full object-cover" />
               </div>
               <motion.div
                 animate={{ y: [0, -10, 0] }}
