@@ -5,6 +5,31 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Huzaifa.dev | Full Stack Architect</title>
+    <script>
+      // Disable right-click
+      document.addEventListener('contextmenu', event => event.preventDefault());
+      
+      // Disable keyboard shortcuts (Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, F12)
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'F12' || 
+           (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) || 
+           (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) || 
+           (e.ctrlKey && (e.key === 'U' || e.key === 'u')) ||
+           (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c'))) {
+          e.preventDefault();
+        }
+      });
+    </script>
+    <style>
+      /* Disable text selection and dragging */
+      body {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
