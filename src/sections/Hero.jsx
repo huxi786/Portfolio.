@@ -11,6 +11,7 @@ function useTypewriter(words, speed = 80, pause = 1800) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
+    if (!words || words.length === 0) return;
     const current = words[wordIdx];
     let timeout;
     if (!isDeleting && displayed === current) {
@@ -59,9 +60,13 @@ const STATS = [
   { label: 'GitHub Repos', end: 15 },
 ];
 
-export default function Hero() {
+export default function Hero({ settings }) {
   const { playClick, playHover } = useSoundEffects();
   const role = useTypewriter(ROLES);
+
+  const displayName = settings?.hero_title || 'Huzaifa Ajmal';
+  const displaySubtitle = settings?.hero_subtitle || 'Building scalable, efficient, and interactive web solutions with PHP & Laravel.';
+  const displayProfileImg = settings?.profile_image_url || '/huzaifa.jpg';
 
   return (
     <section id="home" className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-950 pt-16">
@@ -91,7 +96,7 @@ export default function Hero() {
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight mb-4 leading-tight">
               <span className="text-white block mb-2">Hi, I'm</span>
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400">
-                Huzaifa Ajmal
+                {displayName}
               </span>
             </h1>
 
@@ -102,9 +107,7 @@ export default function Hero() {
             </div>
 
             <p className="text-lg sm:text-xl text-gray-400 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Building scalable, efficient, and interactive web solutions with{' '}
-              <span className="text-white font-semibold">PHP</span> &amp;{' '}
-              <span className="text-white font-semibold">Laravel</span>.
+              {displaySubtitle}
             </p>
 
             {/* CTA Buttons */}
@@ -174,7 +177,7 @@ export default function Hero() {
             <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto">
               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-600 rounded-full blur-2xl opacity-50 animate-pulse" />
               <div className="relative w-full h-full rounded-full border-4 border-white/10 bg-slate-900/50 backdrop-blur-xl overflow-hidden flex items-center justify-center">
-                <img src="/huzaifa.jpg" alt="Huzaifa Ajmal" className="w-full h-full object-cover" />
+                <img src={displayProfileImg} alt={displayName} className="w-full h-full object-cover" />
               </div>
               <motion.div
                 animate={{ y: [0, -10, 0] }}

@@ -5,7 +5,7 @@ import { useSoundEffects } from '../hooks/useSoundEffects';
 
 const BASE = '/';
 
-const projects = [
+const DEFAULT_PROJECTS = [
   {
     title: 'Mystic Mall E-Commerce',
     desc: 'A fully responsive e-commerce platform with user auth, payment integration, admin dashboard, and real-time inventory.',
@@ -64,13 +64,17 @@ const projects = [
   },
 ];
 
-const TABS = ['All', 'PHP/Laravel', 'JavaScript'];
+const TABS = ['All', 'PHP/Laravel', 'JavaScript', 'React', 'Python'];
 
-export default function Projects() {
+export default function Projects({ projects }) {
   const [active, setActive] = useState('All');
   const [modal, setModal] = useState(null);
 
-  const filtered = active === 'All' ? projects : projects.filter(p => p.category === active);
+  const displayProjects = projects && projects.length > 0 ? projects : DEFAULT_PROJECTS;
+  
+  const filtered = active === 'All' 
+    ? displayProjects 
+    : displayProjects.filter(p => p.category === active);
 
   return (
     <section id="projects" className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-slate-950 relative">
@@ -109,14 +113,20 @@ export default function Projects() {
             transition={{ duration: 0.2 }}
             className="grid md:grid-cols-3 gap-8"
           >
-            {filtered.map((project, i) => (
-              <ProjectCard
-                key={project.title}
-                project={project}
-                index={i}
-                onOpen={() => project.slides ? setModal(project) : window.open(project.link, '_blank')}
-              />
-            ))}
+            {filtered.map((project, i) => {
+              const slides = project.slides_urls && project.slides_urls.length > 0 
+                ? project.slides_urls 
+                : (project.slides || null);
+              
+              return (
+                <ProjectCard
+                  key={project.title}
+                  project={project}
+                  index={i}
+                  onOpen={() => slides ? setModal(project) : window.open(project.link, '_blank')}
+                />
+              );
+            })}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -130,6 +140,11 @@ export default function Projects() {
 
 function ProjectCard({ project, index, onOpen }) {
   const { playClick, playHover } = useSoundEffects();
+
+  const thumbnail = project.thumbnail_url || project.thumbnail;
+  const slides = project.slides_urls && project.slides_urls.length > 0 
+    ? project.slides_urls 
+    : (project.slides || null);
 
   return (
     <motion.div
@@ -149,8 +164,8 @@ function ProjectCard({ project, index, onOpen }) {
 
       {/* Thumbnail */}
       <div className="h-48 w-full overflow-hidden bg-white relative">
-        {project.thumbnail ? (
-          <img src={project.thumbnail} alt={project.title} className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500" />
+        {thumbnail ? (
+          <img src={thumbnail} alt={project.title} className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500" />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-slate-800">
             <Layout className="w-12 h-12 text-white/20" />
@@ -168,7 +183,7 @@ function ProjectCard({ project, index, onOpen }) {
           >
             <Github size={16} /> View Code
           </a>
-          {(project.demo || project.slides) && (
+          {(project.demo || slides) && (
             <button
               onClick={(e) => { playClick(); project.demo ? window.open(project.demo, '_blank') : onOpen(); }}
               className="flex items-center gap-2 px-5 py-2 bg-purple-500/80 rounded-full text-sm text-white hover:bg-purple-500 transition-colors"
@@ -183,11 +198,14 @@ function ProjectCard({ project, index, onOpen }) {
       <div className="p-6 border-t border-white/10">
         <h3 className="text-xl font-bold mb-2 group-hover:text-purple-400 transition-colors">{project.title}</h3>
         <p className="text-gray-400 text-sm mb-4 line-clamp-2">{project.desc}</p>
-        <div className="flex flex-wrap gap-2">
-          {project.tags.map(tag => (
-            <span key={tag} className="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">{tag}</span>
-          ))}
-        </div>
+        
+        {project.tags && Array.isArray(project.tags) && (
+          <div className="flex flex-wrap gap-2">
+            {project.tags.map(tag => (
+              <span key={tag} className="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">{tag}</span>
+            ))}
+          </div>
+        )}
       </div>
     </motion.div>
   );
@@ -195,7 +213,9 @@ function ProjectCard({ project, index, onOpen }) {
 
 function ProjectModal({ project, onClose }) {
   const [current, setCurrent] = useState(0);
-  const slides = project.slides || [];
+  const slides = project.slides_urls && project.slides_urls.length > 0 
+    ? project.slides_urls 
+    : (project.slides || []);
 
   return (
     <motion.div

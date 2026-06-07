@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 
-const skills = [
+const DEFAULT_SKILLS = [
   { name: 'Laravel',        level: 90, category: 'Backend',  color: '#f87171', label: 'Expert' },
   { name: 'PHP',            level: 88, category: 'Backend',  color: '#c084fc', label: 'Expert' },
   { name: 'MySQL',          level: 80, category: 'Database', color: '#fb923c', label: 'Advanced' },
@@ -53,9 +53,11 @@ function SkillBar({ skill }) {
   );
 }
 
-export default function Skills() {
+export default function Skills({ skills }) {
   const [active, setActive] = useState('All');
-  const filtered = active === 'All' ? skills : skills.filter(s => s.category === active);
+  
+  const displaySkills = skills && skills.length > 0 ? skills : DEFAULT_SKILLS;
+  const filtered = active === 'All' ? displaySkills : displaySkills.filter(s => s.category === active);
 
   return (
     <section id="skills" className="min-h-screen flex items-center justify-center bg-slate-950 py-20 relative">

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Code2, Globe, Cpu } from 'lucide-react';
 
-const FACTS = [
+const DEFAULT_FACTS = [
   '☕ Coffee-fueled coder',
   '🧹 Clean Code Fanatic',
   '🚀 Performance Obsessed',
@@ -10,12 +10,14 @@ const FACTS = [
   '📚 Always Learning',
 ];
 
-function RotatingBadge() {
+function RotatingBadge({ facts }) {
   const [idx, setIdx] = useState(0);
+  const factsList = facts && facts.length > 0 ? facts : DEFAULT_FACTS;
+
   useEffect(() => {
-    const t = setInterval(() => setIdx(i => (i + 1) % FACTS.length), 2500);
+    const t = setInterval(() => setIdx(i => (i + 1) % factsList.length), 2500);
     return () => clearInterval(t);
-  }, []);
+  }, [factsList]);
 
   return (
     <motion.span
@@ -26,7 +28,7 @@ function RotatingBadge() {
       transition={{ duration: 0.4 }}
       className="inline-block py-1 px-3 rounded-full bg-purple-500/15 text-purple-300 text-sm border border-purple-500/30"
     >
-      {FACTS[idx]}
+      {factsList[idx]}
     </motion.span>
   );
 }
@@ -37,7 +39,10 @@ const SKILLS_PREVIEW = [
   { name: 'Vue',         pct: 60, color: '#4ade80' },
 ];
 
-export default function About() {
+export default function About({ settings }) {
+  const displayProfileImg = settings?.profile_image_url || '/huzaifa.jpg';
+  const displayName = settings?.hero_title || 'Huzaifa Ajmal';
+
   return (
     <section id="about" className="min-h-screen flex items-center justify-center bg-slate-950 py-20 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-500/5 blur-3xl pointer-events-none" />
@@ -64,12 +69,12 @@ export default function About() {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-600 rounded-3xl blur-2xl opacity-40 scale-110" />
               <div className="relative w-56 h-56 sm:w-64 sm:h-64 rounded-3xl overflow-hidden border-2 border-white/10 shadow-2xl">
-                <img src="/huzaifa.jpg" alt="Huzaifa Ajmal" className="w-full h-full object-cover" />
+                <img src={displayProfileImg} alt={displayName} className="w-full h-full object-cover" />
               </div>
             </div>
 
             {/* Fun-fact ticker */}
-            <RotatingBadge />
+            <RotatingBadge facts={settings?.facts} />
 
             {/* Quick mini skill bars */}
             <div className="w-full max-w-xs space-y-3">
@@ -102,15 +107,24 @@ export default function About() {
             className="space-y-6"
           >
             <h3 className="text-2xl font-semibold text-blue-400">Transforming Ideas into Digital Reality</h3>
-            <p className="text-gray-300 text-lg leading-relaxed">
-              I'm a passionate Full Stack Developer with deep expertise in{' '}
-              <span className="text-white font-bold">Laravel (PHP)</span>. I build high-performance web applications
-              that are not only visually stunning but also robust and scalable.
-            </p>
-            <p className="text-gray-400 leading-relaxed">
-              With a strong foundation in backend architecture and modern frontend frameworks,
-              I bridge the gap between complex logic and intuitive user experiences.
-            </p>
+            
+            {settings?.about_text ? (
+              <p className="text-gray-300 text-lg leading-relaxed" style={{ whiteSpace: 'pre-line' }}>
+                {settings.about_text}
+              </p>
+            ) : (
+              <>
+                <p className="text-gray-300 text-lg leading-relaxed">
+                  I'm a passionate Full Stack Developer with deep expertise in{' '}
+                  <span className="text-white font-bold">Laravel (PHP)</span>. I build high-performance web applications
+                  that are not only visually stunning but also robust and scalable.
+                </p>
+                <p className="text-gray-400 leading-relaxed">
+                  With a strong foundation in backend architecture and modern frontend frameworks,
+                  I bridge the gap between complex logic and intuitive user experiences.
+                </p>
+              </>
+            )}
 
             <div className="grid gap-4">
               <FeatureCard icon={Code2} title="Clean Code" desc="Maintainable, scalable, and efficient code is my priority." />

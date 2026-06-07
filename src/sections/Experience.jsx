@@ -2,14 +2,20 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Network, Briefcase, GraduationCap } from 'lucide-react';
 
-const experiences = [
+const ICON_MAP = {
+  Network: Network,
+  Briefcase: Briefcase,
+  GraduationCap: GraduationCap,
+};
+
+const DEFAULT_EXPERIENCES = [
   {
     year: '2023 - Present',
     title: 'Full Stack Developer',
     company: 'Freelance & Contract',
     description: 'Developing high-performance web applications for diverse clients. Focused on scalable architectures and modern UI/UX.',
     type: 'Work',
-    icon: Network,
+    icon_name: 'Network',
     tags: ['Laravel', 'PHP', 'React', 'MySQL'],
     badge: '🏆 Latest',
   },
@@ -17,9 +23,9 @@ const experiences = [
     year: 'Dec 2025 - Feb 2026',
     title: 'Laravel PHP Intern',
     company: 'Provelpers',
-    description: 'Completed a 3-month internship + 10-months proffessional experienc, focused on backend development using Laravel and PHP.',
+    description: 'Completed a 3-month internship + 10-months professional experience, focused on backend development using Laravel and PHP.',
     type: 'Internship',
-    icon: Briefcase,
+    icon_name: 'Briefcase',
     tags: ['Laravel', 'PHP', 'Blade', 'MySQL'],
   },
   {
@@ -28,15 +34,17 @@ const experiences = [
     company: 'GCUF — Government College University Faisalabad',
     description: 'Graduated with honors. Specialized in Software Engineering & Database Systems.',
     type: 'Education',
-    icon: GraduationCap,
+    icon_name: 'GraduationCap',
     tags: ['DSA', 'OOP', 'DBMS', 'SE'],
   },
 ];
 
-export default function Experience() {
+export default function Experience({ experiences }) {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start 80%', 'end 30%'] });
   const scaleY = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+
+  const displayExperiences = experiences && experiences.length > 0 ? experiences : DEFAULT_EXPERIENCES;
 
   return (
     <section id="experience" className="min-h-screen flex items-center justify-center py-20 relative bg-slate-950">
@@ -66,7 +74,7 @@ export default function Experience() {
 
           {/* Items */}
           <div className="space-y-10">
-            {experiences.map((exp, index) => (
+            {displayExperiences.map((exp, index) => (
               <TimelineItem key={index} experience={exp} index={index} />
             ))}
           </div>
@@ -77,7 +85,7 @@ export default function Experience() {
 }
 
 function TimelineItem({ experience, index }) {
-  const Icon = experience.icon;
+  const IconComponent = ICON_MAP[experience.icon_name] || Briefcase;
 
   return (
     <motion.div
@@ -88,7 +96,7 @@ function TimelineItem({ experience, index }) {
     >
       {/* Icon dot — positioned over the line */}
       <div className="absolute left-0 top-5 flex items-center justify-center w-10 h-10 bg-slate-950 border-2 border-blue-500 rounded-full z-10 shadow-lg shadow-blue-500/30 shrink-0">
-        <Icon size={17} className="text-blue-400" />
+        <IconComponent size={17} className="text-blue-400" />
       </div>
 
       {/* Card — always to the right of the line */}
@@ -114,13 +122,15 @@ function TimelineItem({ experience, index }) {
           <p className="text-gray-400 text-sm leading-relaxed mb-4">{experience.description}</p>
 
           {/* Tags */}
-          <div className="flex flex-wrap gap-2">
-            {experience.tags.map(tag => (
-              <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300">
-                {tag}
-              </span>
-            ))}
-          </div>
+          {experience.tags && Array.isArray(experience.tags) && (
+            <div className="flex flex-wrap gap-2">
+              {experience.tags.map(tag => (
+                <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </motion.div>

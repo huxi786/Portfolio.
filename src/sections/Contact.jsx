@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Send, Github, Linkedin, Twitter, Phone, MapPin, ExternalLink } from 'lucide-react';
-import emailjs from '@emailjs/browser';
+import { supabase } from '../utils/supabaseClient';
 
 export default function Contact() {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
@@ -9,41 +9,34 @@ export default function Contact() {
   const [status, setStatus] = useState({ type: '', message: '' });
   const formRef = React.useRef();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setStatus({ type: '', message: '' });
 
-    // Check if keys are configured
-    const serviceId = 'service_YOUR_SERVICE_ID';
-    const templateId = 'template_YOUR_TEMPLATE_ID';
-    const publicKey = 'YOUR_PUBLIC_KEY';
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formState.name,
+            email: formState.email,
+            message: formState.message
+          }
+        ]);
 
-    const isConfigured = serviceId !== 'service_YOUR_SERVICE_ID' && 
-                         templateId !== 'template_YOUR_TEMPLATE_ID' && 
-                         publicKey !== 'YOUR_PUBLIC_KEY';
+      if (error) throw error;
 
-    if (!isConfigured) {
-      setTimeout(() => {
-        window.location.href = `mailto:ranahuxi@gmail.com?subject=Contact from ${formState.name}&body=${formState.message} (${formState.email})`;
-        setStatus({ type: 'success', message: 'Opening your email client...' });
-        setIsSubmitting(false);
-      }, 1000);
-      return;
+      setStatus({ type: 'success', message: 'Message sent! Saved to database successfully.' });
+      setFormState({ name: '', email: '', message: '' });
+    } catch (err) {
+      console.error("Database Save Error:", err);
+      // Fallback mailto link in case database insert fails
+      window.location.href = `mailto:ranahuxi@gmail.com?subject=Contact from ${formState.name}&body=${formState.message} (${formState.email})`;
+      setStatus({ type: 'success', message: 'Opening your default email client instead...' });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
-      .then((result) => {
-        setStatus({ type: 'success', message: 'Message sent! I will get back to you soon.' });
-        setFormState({ name: '', email: '', message: '' });
-      }, (error) => {
-        console.error("EmailJS Error:", error);
-        window.location.href = `mailto:ranahuxi@gmail.com?subject=Contact from ${formState.name}&body=${formState.message} (${formState.email})`;
-        setStatus({ type: 'success', message: 'Email service failed. Opening your default email client instead.' });
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
   };
 
   return (

@@ -10,21 +10,23 @@ import Projects from './sections/Projects';
 import Contact from './sections/Contact';
 import ScrollToTop from './components/ScrollToTop';
 import Footer from './components/Footer';
+import { usePortfolioData } from './hooks/usePortfolioData';
 
 function App() {
+  const { data, loading, error } = usePortfolioData();
+
   return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 overflow-x-hidden w-full" style={{ cursor: 'none' }}>
       <CustomCursor />
       <Navbar />
       
       <main className="relative z-10">
-        <Hero />
-        <About />
+        <Hero settings={data.settings} />
+        <About settings={data.settings} />
         <Services />
-        <Experience />
-        <Skills />
-
-        <Projects />
+        <Experience experiences={data.experiences} />
+        <Skills skills={data.skills} />
+        <Projects projects={data.projects} />
         <Contact />
       </main>
       
