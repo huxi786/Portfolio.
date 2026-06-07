@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 overflow-x-hidden w-full" style={{ cursor: 'none' }}>
       <CustomCursor />
-      <Navbar />
+      <Navbar settings={data.settings} />
       
       <main className="relative z-10">
         <Hero settings={data.settings} />

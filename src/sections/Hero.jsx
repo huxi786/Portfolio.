@@ -68,6 +68,8 @@ export default function Hero({ settings }) {
   const displaySubtitle = settings?.hero_subtitle || 'Building scalable, efficient, and interactive web solutions with PHP & Laravel.';
   const displayProfileImg = settings?.profile_image_url || '/huzaifa.jpg';
 
+  const displayResume = settings?.resume_url || resumePdf;
+
   return (
     <section id="home" className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-950 pt-16">
       {/* Background blobs */}
@@ -137,11 +139,13 @@ export default function Hero({ settings }) {
               </motion.a>
 
               <motion.a
-                href={resumePdf}
+                href={displayResume}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onMouseEnter={playHover}
+                onClick={playClick}
                 className="p-4 bg-white/5 text-white rounded-full border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-sm flex items-center justify-center"
                 title="Download Resume"
               >

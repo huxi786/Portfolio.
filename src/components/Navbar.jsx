@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Terminal, Download } from 'lucide-react';
+import { Menu, X, Terminal, Download, Volume2, VolumeX } from 'lucide-react';
 import { useSoundEffects } from '../hooks/useSoundEffects';
 import resumePdf from '../assets/resume.pdf';
 
@@ -14,11 +14,13 @@ const navItems = [
 
 const SECTION_IDS = navItems.map(i => i.href.replace('#', ''));
 
-export default function Navbar() {
+export default function Navbar({ settings }) {
   const [isOpen, setIsOpen]     = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive]     = useState('home');
-  const { playClick, playHover } = useSoundEffects();
+  const { playClick, playHover, muted, toggleMute } = useSoundEffects();
+
+  const displayResume = settings?.resume_url || resumePdf;
 
   // Scroll bg
   useEffect(() => {
@@ -89,28 +91,46 @@ export default function Navbar() {
             })}
 
             <motion.a
-              href={resumePdf}
+              href={displayResume}
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
+              onMouseEnter={playHover}
+              onClick={playClick}
               className="ml-4 px-4 py-2 rounded-full bg-blue-500/20 hover:bg-blue-500/40 text-white text-sm font-medium transition-colors border border-blue-500/30 flex items-center gap-2"
             >
               Resume <Download size={14} />
             </motion.a>
+
+            <button
+              onClick={() => { playClick(); toggleMute(); }}
+              onMouseEnter={playHover}
+              className="p-2 ml-2 rounded-full text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
+              title={muted ? "Unmute sounds" : "Mute sounds"}
+            >
+              {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+            </button>
           </div>
 
           {/* Mobile controls */}
           <div className="md:hidden flex items-center gap-3">
             <a
-              href={resumePdf}
+              href={displayResume}
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-1.5 rounded-full bg-white/10 text-white text-xs font-medium border border-white/10 flex items-center gap-1"
             >
               Resume <Download size={12} />
             </a>
+            <button
+              onClick={() => { playClick(); toggleMute(); }}
+              className="p-1.5 rounded-full bg-white/10 text-white border border-white/10"
+              title={muted ? "Unmute sounds" : "Mute sounds"}
+            >
+              {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+            </button>
             <button onClick={() => setIsOpen(!isOpen)} className="text-gray-300 hover:text-white p-2">
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
